@@ -1,11 +1,11 @@
 Oblig 2
 =======
-OsloMet brukernavn: 
+OsloMet brukernavn: henyg0604
 
-GitHub brukernavn: 
+GitHub brukernavn: mrpythen
 
-Github repo URL: 
+Github repo URL: https://github.com/data1700-v23/oblig-1-mrpythen
 
-Fullt navn: 
+Fullt navn: Herman Nysted Nygaard
 
 Kort beskrivelse av applikasjon (5-10 setninger):
