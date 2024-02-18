@@ -6,11 +6,9 @@
     <script src="script.js"></script>
     <style>
       #antall{
-          margin-left: auto;
+          width:20%;
       }
-      #fornavn{
-          margin-left: auto;
-      }
+
     </style>
 </head>
 <body>
@@ -28,24 +26,43 @@
                 </select>
             </td>
         </tr>
+        <tr>
+        <td>Antall:</td>
+        <td><input id="antall" type="number">
+        <span id="antallFeil">Du må skrive noe inn i antall</span>
+        </td>
+        </tr>
+
     </table>
     <table>
-        <tr>
 
-            <td>Antall: </td>
-            <td><input id="antall" type="number"></td>
-        </tr>
+
+
+
+
         <tr>
         <td>Fornavn:</td>
-            <td><input id="fornavn" type="text"></td>
+            <td><input id="fornavn" type="text">
+            <span id="fornavnFeil">Du må skrive noe i fornavn</span>
+            </td>
+        </tr>
+        <tr>
+            <td>Etternavn:</td>
+            <td><input id="etternavn" type="text">
+            <span id="etternavnFeil">Du må skrive noe i etternavn</span>
+            </td>
         </tr>
         <tr>
             <td>Telefonnr:</td>
-            <td><input id="telefonnr" type="number"></td>
+            <td><input id="telefonnr" type="number">
+            <span id="TelefonnrFeil">Du må skrive noe i telefonnr </span>
+            </td>
         </tr>
         <tr>
             <td>Epost:</td>
-            <td><input id="epost" type="email"></td>
+            <td><input id="epost" type="email">
+            <span id="TelefonnrFeil">Du må skrive noe i epost </span>
+            </td>
         </tr>
         <tr>
             <td><button id="kjøpBilett">Kjøp bilett</button></td>
