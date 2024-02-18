@@ -18,6 +18,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
         //statisk boolean for validering
         let gyldig = true;
 
+        //validering av film
+        if(filmer === ""){
+            document.getElementById("filmFeil").style.display = "inline";
+            gyldig = false;
+        }else {
+            document.getElementById("filmFeil").style.display = "none";
+        }
         //validering av antall
         if (antall.trim() === "") {
             document.getElementById("antallFeil").style.display = "inline";
