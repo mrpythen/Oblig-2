@@ -69,15 +69,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
         visBilletter(); // Oppdaterer visningen av billetter
     }
 
-    function visBilletter() {
-        let liste = document.getElementById("filmListe");
-        liste.innerHTML = ''; // Tømmer listen først
-        billetter.forEach(billett => {
-            let item = document.createElement("li");
-            item.textContent = `${billett.film}, ${billett.antall}, ${billett.fornavn}, ${billett.etternavn}, ${billett.telefonnr}, ${billett.epost}`;
-            liste.appendChild(item);
-        });
+function visBilletter() {
+    let ut = "<table><tr>" +
+        "<th>Film</th><th>Antall</th><th>Fornavn</th><th>Etternavn</th><th>Telefonnr</th><th>Epost</th>" +
+        "</tr>";
+    for (let billett of billetter) {
+        ut += "<tr>";
+        ut += "<td>" + billett.filmer + "</td><td>" + billett.antall + "</td><td>" + billett.fornavn + "</td><td>" + billett.etternavn + "</td><td>" + billett.telefonnr + "</td><td>" + billett.epost + "</td>";
+        ut += "</tr>";
     }
+    ut += "</table>";
+    document.getElementById("filmListe").innerHTML = ut;
+}
+
 
     function slettAlleBilletter() {
         billetter = [];
