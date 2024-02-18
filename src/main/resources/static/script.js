@@ -47,14 +47,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
             document.getElementById("etternavnFeil").style.display = "none";
         }
         //validering av telefonnr
-        if (telefonnr.trim() === "") {
+        const telefonKrav = /^\d{8,}$/;
+        if (!telefonKrav.test(telefonnr)) {
+            document.getElementById("telefonnrFeil").innerText = "Telefonnummeret er ikke gyldig";
             document.getElementById("telefonnrFeil").style.display = "inline";
             gyldig = false;
         } else {
             document.getElementById("telefonnrFeil").style.display = "none";
         }
+
         //validering av epost
-        if (epost.trim() === "") {
+        const epostKrav = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
+        if (!epostKrav.test(epost)) {
+            document.getElementById("epostFeil").innerText = "Epostadressen er ikke gyldig";
             document.getElementById("epostFeil").style.display = "inline";
             gyldig = false;
         } else {
