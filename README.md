@@ -1,4 +1,4 @@
-Oblig 2
+Oblig 1
 =======
 OsloMet brukernavn: henyg0604
 
