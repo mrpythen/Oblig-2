@@ -8,7 +8,10 @@
       #antall{
           width:20%;
       }
-
+      span{
+          color:red;
+          display:none;
+      }
     </style>
 </head>
 <body>
@@ -55,13 +58,13 @@
         <tr>
             <td>Telefonnr:</td>
             <td><input id="telefonnr" type="number">
-            <span id="TelefonnrFeil">Du må skrive noe i telefonnr </span>
+            <span id="telefonnrFeil">Du må skrive noe i telefonnr </span>
             </td>
         </tr>
         <tr>
             <td>Epost:</td>
             <td><input id="epost" type="email">
-            <span id="TelefonnrFeil">Du må skrive noe i epost </span>
+            <span id="epostFeil">Du må skrive noe i epost </span>
             </td>
         </tr>
         <tr>
@@ -77,7 +80,7 @@
     </table>
     <table id="filmListe">
     </table>
-    <button id="kjøpBilett">Slett alle bilettene</button
+    <button id="slettAlle">Slett alle bilettene</button
 
 </body>
 </html>
