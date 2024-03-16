@@ -32,3 +32,13 @@ function hentAlleBilletter() {
         billetter.forEach(billett => {
             ut += `<tr><td>${billett.film}</td><td>${billett.antall}</td><td>${billett.fornavn}</td><td>${billett.etternavn}</td><td>${billett.telefonnr}</td><td>${billett.epost}</td></tr>`;
         });
+        ut += "</table>";
+        document.getElementById("filmListe").innerHTML = ut;
+    });
+}
+
+function slettAlleBilletter() {
+    fetch('/slettAlle').then(() => {
+        hentAlleBilletter(); // Clear and refresh the ticket list
+    });
+}
