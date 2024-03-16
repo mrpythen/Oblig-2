@@ -1,0 +1,94 @@
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="script.js"></script>
+    <style>
+      #antall{
+          width:20%;
+      }
+      span{
+          color:red;
+          display:none;
+      }
+      #filmListe td {
+          text-align: center;
+      }
+    </style>
+</head>
+<body>
+    <h1>Bestilling av kinobilletter </h1>
+    <form>
+    <table>
+        <tr>
+            <td>Velg film:</td>
+            <td>
+                <select id="filmer">
+                    <option value="" style="display:none;">Velg film her</option>
+                    <option id="a">Bob Marley: One Love</option>
+                    <option id="b">Madame Web</option>
+                    <option id="c">Victoria Må Dø</option>
+                    <option id="d">The Beekeeper</option>
+                </select>
+                <span id="filmFeil">Du må velge film</span>
+            </td>
+        </tr>
+        <tr>
+        <td>Antall:</td>
+        <td><input id="antall" type="number">
+        <span id="antallFeil">Du må skrive noe inn i antall</span>
+        </td>
+        </tr>
+
+    </table>
+
+
+    <table>
+        <tr>
+        <td>Fornavn:</td>
+            <td><input id="fornavn" type="text">
+            <span id="fornavnFeil">Du må skrive noe i fornavn</span>
+            </td>
+        </tr>
+        <tr>
+            <td>Etternavn:</td>
+            <td><input id="etternavn" type="text">
+            <span id="etternavnFeil">Du må skrive noe i etternavn</span>
+            </td>
+        </tr>
+        <tr>
+            <td>Telefonnr:</td>
+            <td><input id="telefonnr" type="number">
+            <span id="telefonnrFeil">Du må skrive noe i telefonnr </span>
+            </td>
+        </tr>
+        <tr>
+            <td>Epost:</td>
+            <td><input id="epost" type="email">
+            <span id="epostFeil">Du må skrive noe i epost </span>
+            </td>
+        </tr>
+    </table>
+    </form>
+    <table>
+
+        <tr>
+            <td><button id="kjøpBillett">Kjøp billett</button></td>
+        </tr>
+    </table>
+    <table>
+        <tr>
+            <td><h2>Alle billetter</h2></td>
+        </tr>
+
+
+    </table>
+    <table id="filmListe">
+    </table>
+    <button id="slettAlle">Slett alle billettene</button
+
+
+</body>
+</html>
