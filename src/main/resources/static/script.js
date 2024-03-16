@@ -1,5 +1,12 @@
-// Use fetch API for server communication
-function bestillBilletter() {
+// JavaScript code for handling the interactions and making API calls to the server
+document.addEventListener('DOMContentLoaded', (event) => {
+    document.getElementById("kjøpBillett").addEventListener("click", bestillBilletter);
+    document.getElementById("slettAlle").addEventListener("click", slettAlleBilletter);
+});
+
+function bestillBilletter(event) {
+    event.preventDefault(); // Prevent form submission
+
     let billett = {
         film: document.getElementById("filmer").value,
         antall: parseInt(document.getElementById("antall").value),
@@ -9,32 +16,19 @@ function bestillBilletter() {
         epost: document.getElementById("epost").value
     };
 
-    // Perform input validation here as before
-    // Assuming input validation is successful
-
     fetch('/lagre', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
+        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(billett)
     }).then(() => {
         alert('Billett lagret');
-        hentAlleBilletter(); // Fetch and display all tickets
+        hentAlleBilletter(); // Refresh the ticket list
     });
 }
 
 function hentAlleBilletter() {
-    fetch('/hentAlle')
-        .then(response => response.json())
-        .then(billetter => {
-            visBilletter(billetter); // Update this function to accept billetter as a parameter
+    fetch('/hentAlle').then(response => response.json()).then(billetter => {
+        let ut = "<table class='table'><tr><th>Film</th><th>Antall</th><th>Fornavn</th><th>Etternavn</th><th>Telefonnr</th><th>Epost</th></tr>";
+        billetter.forEach(billett => {
+            ut += `<tr><td>${billett.film}</td><td>${billett.antall}</td><td>${billett.fornavn}</td><td>${billett.etternavn}</td><td>${billett.telefonnr}</td><td>${billett.epost}</td></tr>`;
         });
-}
-
-function slettAlleBilletter() {
-    fetch('/slettAlle')
-        .then(() => {
-            hentAlleBilletter(); // Refresh the ticket list
-        });
-}
