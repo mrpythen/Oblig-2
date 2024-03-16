@@ -1,4 +1,4 @@
-package com.example.oblig1;
+package com.example.oblig2;
 
 public class Kinobilett {
     private String film;
@@ -21,7 +21,7 @@ public class Kinobilett {
         this.epost = epost;
     }
 
-    // Getters and setters
+    // Getters og setters
     public String getFilm() {
         return film;
     }

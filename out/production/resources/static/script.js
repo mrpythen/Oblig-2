@@ -8,9 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function bestillBilletter(event) {
-    event.preventDefault(); // Forhindrer standard innsendingsoppførsel
+    event.preventDefault();
 
-    // Henter verdier fra inputfeltene
     let filmer = document.getElementById("filmer").value;
     let antall = document.getElementById("antall").value;
     let fornavn = document.getElementById("fornavn").value;
@@ -18,33 +17,51 @@ function bestillBilletter(event) {
     let telefonnr = document.getElementById("telefonnr").value;
     let epost = document.getElementById("epost").value;
 
-    // Validerer hvert felt
-    let gyldigFilm = validerFelt(filmer, "filmFeil", "Du må velge film");
-    let gyldigAntall = validerFelt(antall, "antallFeil", "Du må skrive noe inn i antall");
-    let gyldigFornavn = validerFelt(fornavn, "fornavnFeil", "Du må skrive noe i fornavn");
-    let gyldigEtternavn = validerFelt(etternavn, "etternavnFeil", "Du må skrive noe i etternavn");
-    let gyldigTelefonnr = validerTelefonnr(telefonnr, "telefonnrFeil", "Telefonnummeret er ikke gyldig");
-    let gyldigEpost = validerEpost(epost, "epostFeil", "Epostadressen er ikke gyldig");
+    if (!valider(filmer, antall, fornavn, etternavn, telefonnr, epost)) return;
 
-    // Sjekker om alle valideringer er passert
-    if (!(gyldigFilm && gyldigAntall && gyldigFornavn && gyldigEtternavn && gyldigTelefonnr && gyldigEpost)) {
-        return;
-    }
+    let billettData = {
+        film: filmer,
+        antall: parseInt(antall, 10),
+        fornavn: fornavn,
+        etternavn: etternavn,
+        telefonnr: telefonnr,
+        epost: epost
+    };
 
-    // Legger til billettene i "alle billetter" hvis alle valideringer er passert
-    billetter.push({filmer, antall, fornavn, etternavn, telefonnr, epost});
+    fetch('/lagre', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(billettData)
+    })
+        .then(response => {
+            if (!response.ok) throw new Error('Noe gikk galt med lagring av billetten.');
+            alert('Billett lagret.');
+            hentAlleBilletter();
+        })
+        .catch(error => {
+            alert(error.message);
+        });
 
-    // Oppdaterer visningen av billetter
-    visBilletter();
-
-    // Tømmer inputfeltene for ny innsending
     tømSkjema();
+}
+
+function valider(filmer, antall, fornavn, etternavn, telefonnr, epost) {
+    let gyldig = true;
+    gyldig &= validerFelt(filmer, "filmFeil", "Du må velge film");
+    gyldig &= validerFelt(antall, "antallFeil", "Du må skrive noe inn i antall");
+    gyldig &= validerFelt(fornavn, "fornavnFeil", "Du må skrive noe i fornavn");
+    gyldig &= validerFelt(etternavn, "etternavnFeil", "Du må skrive noe i etternavn");
+    gyldig &= validerTelefonnr(telefonnr, "telefonnrFeil", "Telefonnummeret er ikke gyldig");
+    gyldig &= validerEpost(epost, "epostFeil", "Epostadressen er ikke gyldig");
+    return gyldig;
 }
 
 function validerFelt(verdi, feilId, feilmelding) {
     if (!verdi.trim()) {
-        document.getElementById(feilId).style.display = "inline";
-        document.getElementById(feilId).innerHTML = feilmelding;
+        document.getElementById(feilId).style.display = "block";
+        document.getElementById(feilId).textContent = feilmelding;
         return false;
     } else {
         document.getElementById(feilId).style.display = "none";
@@ -55,8 +72,8 @@ function validerFelt(verdi, feilId, feilmelding) {
 function validerTelefonnr(telefonnr, feilId, feilmelding) {
     const telefonKrav = /^\d{8}$/;
     if (!telefonKrav.test(telefonnr)) {
-        document.getElementById(feilId).style.display = "inline";
-        document.getElementById(feilId).innerHTML = feilmelding;
+        document.getElementById(feilId).style.display = "block";
+        document.getElementById(feilId).textContent = feilmelding;
         return false;
     } else {
         document.getElementById(feilId).style.display = "none";
@@ -67,8 +84,8 @@ function validerTelefonnr(telefonnr, feilId, feilmelding) {
 function validerEpost(epost, feilId, feilmelding) {
     const epostKrav = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
     if (!epostKrav.test(epost)) {
-        document.getElementById(feilId).style.display = "inline";
-        document.getElementById(feilId).innerHTML = feilmelding;
+        document.getElementById(feilId).style.display = "block";
+        document.getElementById(feilId).textContent = feilmelding;
         return false;
     } else {
         document.getElementById(feilId).style.display = "none";
@@ -76,10 +93,22 @@ function validerEpost(epost, feilId, feilmelding) {
     }
 }
 
-function visBilletter() {
-    let ut = "<table><tr><th>Film</th><th>Antall</th><th>Fornavn</th><th>Etternavn</th><th>Telefonnr</th><th>Epost</th></tr>";
-    billetter.forEach(billett => {
-        ut += `<tr><td>${billett.filmer}</td><td>${billett.antall}</td><td>${billett.fornavn}</td><td>${billett.etternavn}</td><td>${billett.telefonnr}</td><td>${billett.epost}</td></tr>`;
+function hentAlleBilletter() {
+    fetch('/hentAlle')
+        .then(response => response.json())
+        .then(data => {
+            billetter = data; // Oppdaterer den lokale billettlisten med data fra serveren
+            visBilletter(data); // Kaller visBilletter med den oppdaterte listen
+        })
+        .catch(error => {
+            console.error('Feil ved henting av billetter:', error);
+        });
+}
+
+function visBilletter(billettListe) {
+    let ut = "<table class='table'><tr><th>Film</th><th>Antall</th><th>Fornavn</th><th>Etternavn</th><th>Telefonnr</th><th>Epost</th></tr>";
+    billettListe.forEach(billett => {
+        ut += `<tr><td>${billett.film}</td><td>${billett.antall}</td><td>${billett.fornavn}</td><td>${billett.etternavn}</td><td>${billett.telefonnr}</td><td>${billett.epost}</td></tr>`;
     });
     ut += "</table>";
     document.getElementById("filmListe").innerHTML = ut;
@@ -93,13 +122,16 @@ function tømSkjema() {
     document.getElementById("telefonnr").value = '';
     document.getElementById("epost").value = '';
     // Skjuler eventuelle feilmeldinger
-    let feilmeldinger = document.querySelectorAll("span");
-    feilmeldinger.forEach(feilmelding => {
-        feilmelding.style.display = "none";
-    });
+    document.querySelectorAll("span").forEach(feilmelding => feilmelding.style.display = "none");
 }
 
 function slettAlleBilletter() {
-    billetter = [];
-    visBilletter();
+    fetch('/slettAlle', { method: 'GET' }) // Eller method: 'DELETE' avhengig av serverkonfigurasjon
+        .then(() => {
+            alert('Alle billetter slettet.');
+            hentAlleBilletter(); // Henter den oppdaterte listen som nå skal være tom
+        })
+        .catch(error => {
+            console.error('Feil ved sletting av alle billetter:', error);
+        });
 }
