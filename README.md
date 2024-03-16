@@ -4,7 +4,7 @@ OsloMet brukernavn: henyg0604
 
 GitHub brukernavn: mrpythen
 
-Github repo URL: https://github.com/mrpythen/Oblig-2-mrpythen
+Github repo URL: https://github.com/mrpythen/Oblig-2
 
 Fullt navn: Herman Nysted Nygaard
 
